@@ -3,11 +3,11 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
-  it('Testa se é uma função', async () => {
+  it('Testa se é uma função', () => {
     const actual = typeof fetchProducts;
     const expected = 'function';
 
-    expect(await actual).toBe(expected);
+    expect(actual).toBe(expected);
   });
 
   it('Testa se fetch é chamada quando executar a função com o argumento computador', async () => {
@@ -24,15 +24,15 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Testa se o retorno da função com o argumento computador é igual ao objeto computadorSearch', async () => {
-     const actual = fetchProducts('computador');
+     const actual = await fetchProducts('computador');
      const expected = computadorSearch;
 
-     expect(await actual).toEqual(expected);
+     expect(actual).toEqual(expected);
   });
 
   it('Testa se não for passado nenhum argumento, retorna um erro', async () => {
-    const actual = fetchProducts();
+    const actual = await fetchProducts();
 
-    expect(await actual).toEqual(new Error('You must provide an url'))
+    expect(actual).toEqual(new Error('You must provide an url'))
   });
 });
