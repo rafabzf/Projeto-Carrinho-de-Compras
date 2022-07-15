@@ -1,5 +1,3 @@
-// const { fetchItem } = require("./helpers/fetchItem");
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -51,6 +49,11 @@ const lista = async () => {
   });
 };
 
+const removeLi = () => {
+  const li = document.querySelectorAll('.cart__item');
+  li.forEach((item) => item.addEventListener('click', cartItemClickListener));
+};
+
 const addItem = async () => {
   const listItens = document.querySelectorAll('.item');
   const cartItens = document.querySelector('.cart__items');
@@ -62,11 +65,16 @@ const addItem = async () => {
   
   item.addEventListener('click', () => {
     cartItens.appendChild(createCartItemElement(object));
+    saveCartItems(cartItens.innerHTML);
   });
   });
 };
 
 window.onload = async () => {
+  const ol = document.querySelector('.cart__items');
   await lista();
   await addItem();
+  const teste = getSavedCartItems();
+  ol.innerHTML = teste;
+  removeLi();
 };
