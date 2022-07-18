@@ -70,6 +70,13 @@ const addItem = async () => {
   });
 };
 
+const cleanCart = () => {
+  const cleanItems = () => document.querySelectorAll('.cart__item').forEach((item) => {
+    item.remove();
+  });
+  document.querySelector('.empty-cart').addEventListener('click', cleanItems);
+};
+
 window.onload = async () => {
   const ol = document.querySelector('.cart__items');
   await lista();
@@ -77,4 +84,5 @@ window.onload = async () => {
   const teste = getSavedCartItems();
   ol.innerHTML = teste;
   removeLi();
+  cleanCart();
 };
