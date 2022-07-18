@@ -38,14 +38,25 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const lista = async () => {
+const messageLoading = () => {
+  const selectItem = document.querySelector('.items');
+  const createDiv = document.createElement('div');
+  createDiv.className = 'loading';
+  createDiv.innerText = 'carregando...';
+  selectItem.appendChild(createDiv);
+};
+
+const removeMessageLoading = () => document.querySelector('.loading').remove();
+
+const createItemHTML = async () => {
+  messageLoading();
   const selecionandoItems = document.querySelector('.items');
   const data = await fetchProducts('computador');
   const { results } = await data;
-
+  removeMessageLoading();
   results.forEach(({ id, title, thumbnail }) => {
-  const produto = createProductItemElement({ sku: id, name: title, image: thumbnail });
-  selecionandoItems.appendChild(produto);
+    const produto = createProductItemElement({ sku: id, name: title, image: thumbnail });
+    selecionandoItems.appendChild(produto);
   });
 };
 
@@ -79,7 +90,7 @@ const cleanCart = () => {
 
 window.onload = async () => {
   const ol = document.querySelector('.cart__items');
-  await lista();
+  await createItemHTML();
   await addItem();
   const teste = getSavedCartItems();
   ol.innerHTML = teste;
